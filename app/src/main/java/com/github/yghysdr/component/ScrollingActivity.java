@@ -9,6 +9,8 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.github.yghysdr.component.login.Login;
+
 public class ScrollingActivity extends AppCompatActivity {
 
     @Override
@@ -26,6 +28,8 @@ public class ScrollingActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
+        Login login = new Login();
+        login.fun(this);
     }
 
     @Override
