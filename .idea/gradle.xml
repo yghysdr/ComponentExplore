@@ -11,6 +11,8 @@
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/module_login" />
             <option value="$PROJECT_DIR$/module_login_api" />
+            <option value="$PROJECT_DIR$/module_order" />
+            <option value="$PROJECT_DIR$/module_order_api" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />
