@@ -1,17 +1,19 @@
-include ':app', ':module_login', ':module_login_api', ':module_order'
+include ':app', ':module_login', ':module_order'
 
 include_module_api(":module_order")
-//
+include_module_api(":module_login")
+
 def include_module_api(String moduleName) {
+    def ModuleApiName = "business_api"
     //获得工程根目录
-    String originDir = project(moduleName).projectDir
+    def originFile = project(moduleName).projectDir
+    def originDir = originFile.path
     println "OriginDir=" + originDir
+    def targetDir = "${originFile.getParent()}${File.separator}$ModuleApiName${File.separator}${originFile.getName()}_api"
     //制作的 SDK 工程的目录
-    String targetDir = "${originDir}_api"
     println "TargetDir=" + targetDir
     //制作的 SDK 工程的名字
     String sdkName = "${project(moduleName).name}_api"
-    println "TargetModuleApiName=" + sdkName
     //第二次生成之前先删除上次的文件(iml)
     FileTree targetFiles = fileTree(targetDir)
     targetFiles.exclude "*.iml"
@@ -31,8 +33,8 @@ def include_module_api(String moduleName) {
         it.name == "AndroidManifest.xml"
     }
     def parser = new XmlParser().parse(originManifest)
-    parser.remove(parser.value())
+    parser.setValue([])
     new XmlNodePrinter(new PrintWriter(originManifest)).print(parser)
     //加入 SDK工程
-    include ":$sdkName"
+    include ":$ModuleApiName:$sdkName"
 }
