@@ -1,3 +1,9 @@
+/**
+ * 仿微信组件化根据业务模块生成对应的api模块功能（复制模块制定文件到一个新的模块）
+ * @param self
+ * @param moduleName
+ * @return
+ */
 static def include_module_api(def self, String moduleName) {
     //方便代码提示
     def settingsObject = self as Settings
