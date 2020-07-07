@@ -1,0 +1,17 @@
+/**
+ * 项目通用模块配置
+ */
+gradle.ext.moduleInfos = [
+        [
+                name      : "login",
+                source_dir: "business/component_login",
+                remote_aar: "login的aar地址方式",
+                "git"     : "git@github.com:yghysdr/ComponentExplore_Login.git",
+        ],
+        [
+                name      : "order",
+                source_dir: "business/component_order",
+                remote_aar: "order的aar依赖方式",
+                "git"     : "git@github.com:yghysdr/ComponentExplore_Order.git",
+        ]
+]

@@ -1,0 +1,14 @@
+def depPath(def name) {
+    def orderModule = gradle.ext.moduleInfos.find { module -> module.name == name }
+    int type = orderModule != null ? orderModule.style : 0
+    if (type == 1) {
+        println "${name}->${orderModule.libName}"
+        return project("${orderModule.libName}")
+    } else if (type == 2 || type == 21) {
+        println "${name}->${orderModule.remote_aar}"
+        return orderModule.remote_aar
+    }
+    throw new IllegalStateException("${name}")
+}
+
+rootProject.metaClass.depPath = { name -> depPath(name) }

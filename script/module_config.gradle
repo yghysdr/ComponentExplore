@@ -1,0 +1,14 @@
+//style代表依赖方式 1源码，2aar, 21aar依赖并且删除源文件【需要谨慎使用】, 0不引入
+gradle.ext.moduleConfigs = [
+        [
+                name      : "login",
+                git_branch: "master",
+                style     : 1
+        ],
+        [
+                name      : "order",
+                git_branch: "master",
+                style     : 1
+        ]
+]
+

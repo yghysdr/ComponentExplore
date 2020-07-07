@@ -1,0 +1,53 @@
+apply from: "${rootProject.projectDir}/script/module_infos.gradle"
+
+def moduleConfigPath = "${rootProject.projectDir}/module_config.gradle"
+println moduleConfigPath
+if (!file(moduleConfigPath).exists()) {
+    copy {
+        from "module_config.gradle"
+        into rootProject.projectDir
+    }
+}
+apply from: moduleConfigPath
+
+def moduleConfigs = gradle.ext.moduleConfigs
+
+println("moduleInfos =" + gradle.ext.moduleInfos)
+println("moduleConfigs =" + moduleConfigs)
+
+gradle.ext.moduleInfos.each { item ->
+    def result = moduleConfigs.find { module -> module.name == item.name }
+    item.style = (result != null ? result.style : 0)
+    item.git_branch = (result != null ? result.git_branch : "master")
+    //1源码，2aar, 21 aar源文件删除, 0不引入
+    def dir = item.source_dir != null ? item.source_dir : item.name
+    def file = new File("${rootProject.projectDir}/${dir}")
+    if (item.style == 1) {
+        if (!file.exists()) {
+            def git = "git clone -b ${item.git_branch} ${item.git}  ${rootProject.projectDir}/${dir}"
+            execCommand(git)
+        }
+        item.libName = ":" + dir.replace("/", ":")
+        println "引入${item.libName}源码"
+        include item.libName
+    } else if (item.style == 21) {
+        if (file.exists()) {
+            file.deleteDir()
+        }
+        println "删除项目${item.name}对应文件${item.source_dir}"
+    }
+}
+
+def execCommand(def command) {
+    exec {
+        try {
+            executable 'bash'
+            args '-c', command
+            println "${command} executed success"
+        } catch (GradleException e) {
+            println "${command} is executed failed"
+        }
+    }
+}
+
+println("moduleInfos =" + gradle.ext.moduleInfos)

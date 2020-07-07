@@ -8,5 +8,4 @@ build/
 /captures
 .externalNativeBuild
 business/
-script/
-module_config.gradle
+./module_config.gradle
