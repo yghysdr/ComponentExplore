@@ -1,7 +1,4 @@
-include ':app', ':module_login', ':module_order'
+apply from: 'script/lib_config.gradle'
 
+include ':app'
 apply from: "module_api.gradle"
-
-include_module_api(this, ":module_order")
-include_module_api(this, ":module_login")
-

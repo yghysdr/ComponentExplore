@@ -7,6 +7,7 @@
 - 模块分层
 - Application需要在每个模块单独使用的
 - 打包
+- 子模块自动管理(引入/删除)功能
 
 ### 模块接口的暴露
 #### 暴露内容包含
@@ -90,4 +91,19 @@ com.android.application
 其他所有非打包模块是
 ```
 apply plugin: 'com.android.library'
+```
+
+### 子模块自动管理(引入/删除)功能
+我们期望项目中只引入自己业务相关的子模块，而且当不使用的时候自动删除。引入script目录，配置module_infos.gradle和module_config.gradle
+- module_infos.gradle是配置子项目依赖和源码信息
+- module_config.gradle是默认的配置依赖关系（项目会默认拷贝到根目录，建议将根目录生成的该文件添加到忽略文件，方便自定义配置）
+  - git_branch 表示依赖源码时仓库的分支
+  - style代表依赖方式 1源码，2aar, 21aar依赖并且删除源文件【需要谨慎使用】, 0不引入
+在setting.gradle 中引入
+```
+apply from: 'script/lib_config.gradle'
+```
+在根工程build.gradle 中引入
+```
+apply from: 'script/root_config.gradle'
 ```
